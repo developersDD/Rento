@@ -1,0 +1,9 @@
+﻿body {
+}
+.parsley-errors-list {
+    color: red;
+    font-weight: 500;
+    font-size: 13px;
+    top: -10px;
+    font-family: inherit;
+}

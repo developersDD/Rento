@@ -1,0 +1,90 @@
+﻿{
+"data":[{
+"Emp_Id": "1",
+"Emp_Name": "Tiger",
+"Gender": "Female",
+"Date_Of_Birth": "20"
+}, {
+"Emp_Id": "2",
+"Emp_Name": "Lion",
+"Gender": "Male",
+"Date_Of_Birth": "40"
+}, {
+"Emp_Id": "3",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "4",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "5",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "6",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "7",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "8",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "9",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "10",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "11",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "12",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "13",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "14",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+},
+{
+"Emp_Id": "15",
+"Emp_Name": "Chettah",
+"Gender": "Nixon",
+"Date_Of_Birth": "0"
+}]
+}

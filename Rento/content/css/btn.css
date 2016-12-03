@@ -1,0 +1,16 @@
+﻿body {
+}
+
+
+.btn {
+}
+
+.btn-thin {
+    border: 1px solid whitesmoke;
+}
+
+
+    .btn-thin:hover {
+        color: black;
+        background-color: #39d78e;
+    }

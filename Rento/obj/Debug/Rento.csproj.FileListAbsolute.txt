@@ -1,0 +1,5 @@
+F:\Current Projects\Rento\Rento\bin\Rento.dll
+F:\Current Projects\Rento\Rento\bin\Rento.pdb
+F:\Current Projects\Rento\Rento\obj\Debug\Rento.csprojResolveAssemblyReference.cache
+F:\Current Projects\Rento\Rento\obj\Debug\Rento.dll
+F:\Current Projects\Rento\Rento\obj\Debug\Rento.pdb

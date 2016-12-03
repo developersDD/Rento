@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Rento | Home</title>
+    <link href="content/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/css/animate.min.css" rel="stylesheet" />
+    <link id="pagestyle" rel="stylesheet" type="text/css" href="content/css/skin-1.css" />
+    <link href="content/css/style.css" rel="stylesheet" />
+    <link href="content/css/rento-styles.css" rel="stylesheet" />
+    <link href="content/components/codrops/css/component.css" rel="stylesheet" />
+    <link href="content/components/parsley/css/parsley.css" rel="stylesheet" />
+    <style type="text/css">
+    </style>
+    <script>
+        paceOptions = {
+            elements: true
+        };
+    </script>
+    <script src="content/js/pace.min.js"></script>
+    <!--    <script type="text/javascript">
+        function swapStyleSheet(sheet) {
+            document.getElementById('pagestyle').setAttribute('href', sheet);
+        }
+    </script>-->
+</head>
+<body id="rento-body"> 
+    <!--loader-->
+    <div class="se-pre-con"></div>
+    <!--loader-->
+
+    <!--  Modal Login -->
+    <div class="modal rento-auth-modal signUpContent" id="modal-login" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+                    <h3 class="modal-title-site text-center">Login </h3>
+                </div>
+                <div class="modal-body" id="modal-body-login">
+                    <div id="modal-login-form">
+                        <form role="form" id="login-form" name="login-form" data-parsley-validate="">
+                            <div class="form-group login-username" id="usernameBox">
+                                <div>
+                                    <input name="log" id="login-user" class="form-control input__field " size="20" placeholder="Enter Email/Mobile Number" type="text"
+                                        data-parsley-trigger="input" data-parsley-required="true" data-parsley-pattern-message="Please enter a valid email or a mobile number"
+                                        data-parsley-pattern="^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|([789]\d{9})$"
+                                        data-parsley-error-container="#usernameBox" data-parsley-validation-threshold="0" />
+                                </div>
+                            </div>
+                            <div class="form-group login-password" id="passwordBox">
+                                <div>
+                                    <input name="Password" id="login-password" class="form-control input__field " size="20" placeholder="Enter Password" type="password"
+                                        data-parsley-trigger="input" data-parsley-required="true"
+                                        data-parsley-error-container="#passwordBox" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="checkbox login-remember col-lg-6">
+                                        <label>
+                                            <input name="rememberme" id="remembermeReg" value="persistent" type="checkbox" />
+                                            Remember Me
+                                        </label>
+                                    </div>
+
+                                    <div class="rento-fgpwd col-lg-6">
+                                        <a id="btnForgotPassword">Forgot Password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <input name="submit" id="btnModalLogin" class="input__button" value="LOGIN" type="submit" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="modal-fwgpwd-form" class="rento-hidden">
+                        <form role="form" id="dup-login-form" name="login-form" data-parsley-validate="">
+                             <div class="form-group login-username" id="dupUsernameBox">
+                                <div>
+                                    <input name="log" id="dup-login-user" class="form-control input__field " size="20" placeholder="Enter Email/Mobile Number" type="text"
+                                        data-parsley-trigger="input" data-parsley-required="true" data-parsley-pattern-message="Please enter a valid email or a mobile number"
+                                        data-parsley-pattern="^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|([789]\d{9})$"
+                                        data-parsley-error-container="#dupUsernameBox" data-parsley-validation-threshold="0" />
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="row">
+                                    <div class="rento-fgpwd col-lg-6">
+                                        <p>OTP Sent to Mobile</p>
+                                    </div>
+
+                                    <div class="rento-fgpwd col-lg-6">
+                                        <a id="btnResendL" class="btnResendOTP">Resend?</a>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="form-group login-username" id="rentoOTP">
+                                <div id="fgpwdBox">
+                                    <input name="login" class="form-control input__field" id="fgpwdotp" size="20" maxlength="6" placeholder="Enter the OTP" type="text"
+                                        data-parsley-trigger="focusout" data-parsley-required="true" data-parsley-maxlength="6" data-parsley-error-container="#regverBox" />
+                                </div>
+                            </div>
+                            <div class="form-group login-password" id="setNewPasswordBox">
+                                <div>
+                                    <input name="Password" id="set-new-password" class="form-control input__field " size="20" placeholder="Set Password" type="password"
+                                        data-parsley-trigger="input" data-parsley-required="true" data-parsley-minlength="6"
+                                        data-parsley-error-container="#passwordBox" />
+                                </div>
+                            </div>
+                            <div>
+                                <input name="submit" id="btnFgPwdSubmit" disabled="disabled" class="input__button" value="SUBMIT" type="submit" />
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <div>
+                            <a class="input__button  modal__button" data-toggle="modal" data-dismiss="modal" href="#modal-register">Not here before?  Sign Up. </a>
+                        </div>
+                    </div>
+                </div>
+                <!--loader-->
+                <div class="se-pre-con-login"></div>
+                <!--loader-->
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal Login Ends-->
+
+
+    <!-- Modal SignUp-->
+    <div class="modal signUpContent rento-auth-modal" id="modal-register" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times; </button>
+                    <h3 class="modal-title-site text-center">Sign Up </h3>
+                </div>
+                <div class="modal-body" id="modal-body-register">
+                    <form role="form" name="register-form" id="register-form" data-parsley-validate="">
+                    <div class="form-group reg-name">
+                        <div id="nameBox">
+                            <input name="name" class="form-control input__field" id="register-name" size="20" placeholder="Name" type="text" 
+                                data-parsley-trigger="input" data-parsley-required="true" 
+                                data-parsley-error-container="#nameBox"/>
+                        </div>
+                    </div>
+                    <div class="form-group reg-email">
+                        <div id="emailBox">
+                            <input name="email" class="form-control input__field" id="register-email" size="20" placeholder="Email" type="email" 
+                                data-parsley-trigger="input" data-parsley-required="true" data-parsley-type="email"
+                                data-parsley-error-container="#emailBox"/>
+                            <!--data-parsley-remote data-parsley-remote-validator="mycustom"
+                                data-parsley-remote-options='{ "type": "GET" }' data-parsley-remote-message="This Email is already registered.-->
+                        </div>
+                    </div>
+                    <div class="form-group reg-mobile">
+                        <div id="mobileBox">
+                            <input name="reg" class="form-control input__field" id="register-mobile" size="20" placeholder="Mobile" type="text" 
+                                data-parsley-trigger="input" data-parsley-required="true" data-parsley-pattern="^[789]\d{9}$"
+                                data-parsley-pattern-message="Please enter a valid mobile number"
+                                data-parsley-error-container="#mobileBox"/>
+                        </div>
+                    </div>
+                    <div class="form-group reg-password">
+                        <div id="pwdBox">
+                            <input name="password" class="form-control input__field" id="register-password" size="20" placeholder="Password" type="password" 
+                                data-parsley-trigger="input" data-parsley-required="true" data-parsley-minlength="6"
+                                data-parsley-error-container="#pwdBox"/>
+                        </div>
+                    </div>
+                     <div class="form-group reg-confirm-password">
+                        <div id="confirmPwdBox">
+                            <input name="password" class="form-control input__field" id="register-confirm-password" size="20" placeholder="Re-enter Password" type="password" 
+                                data-parsley-trigger="input" data-parsley-required="true" data-parsley-minlength="6" data-parsley-equalto="#register-password"
+                                data-parsley-error-container="#confirmPwdBox"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="checkbox login-remember col-md-12">
+                                <label>
+                                    <input name="rememberme" id="remembermeLog" value="persistent" type="checkbox"/>Remember Me
+                                </label>
+                            </div>
+                            <!--<input type="hidden" name="rento-u" id="rento-u" value="" />-->
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <input name="submit" class="input__button" id="btnModalRegister" value="REGISTER" type="submit" />
+                        </div>
+                    </div>
+                        </form>
+                </div>
+                <div class="modal-body rento-hidden" id="modal-body-regverify">
+                    <form role="form" id="regver-form" name="regver-form" data-parsley-validate="">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="rento-fgpwd col-lg-6">
+                                    <p>OTP Sent to Mobile</p>
+                                </div>
+                                <div class="rento-fgpwd col-lg-6">
+                                    <a id="btnResendR" class="btnResendOTP">Resend?</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="regverBox">
+                                <input name="login" class="form-control input__field" id="regverotp" maxlength="6" size="20" placeholder="Enter the OTP" type="text"
+                                    data-parsley-trigger="input" data-parsley-required="true" data-parsley-maxlength="6" data-parsley-error-container="#regverBox" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="rento-fgpwd col-lg-6">
+                                </div>
+                                <div class="rento-fgpwd col-lg-6">
+                                    <a id="btnRegisterAnother">Register another?</a>
+                                </div>
+                            </div>
+                        </div>
+                            <!-- <div>
+                            <input name="submit" class="input__button" id="btnRegVerOTP" value="VERIFY" type="submit" />
+                        </div>-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                     <div>
+                        <div>
+                            <a class="input__button  modal__button" data-toggle="modal" data-dismiss="modal" href="#modal-login">Already Registered?  Log in. </a>
+                        </div>
+                    </div>
+                </div>
+                 <!--loader-->
+                <div class="se-pre-con-register"></div>
+                <!--loader-->
+            </div>
+        </div>
+    </div>
+    <!--Modal SignUp Ends-->
+    <input type="hidden" id="uid-token" value=""/>
+    <!--NavBar-->
+    <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation">
+        <div class="navbar-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6">
+                        <div class="pull-left ">
+                            <ul class="userMenu ">
+                                <li><a href="#"><span class="hidden-xs">HELP</span><i class="glyphicon glyphicon-info-sign hide visible-xs"></i> </a></li>
+                                <li class="phone-number"><a href="callto:+12025550151"><span><i class="fa fa-phone"></i></span><span class="hidden-xs" style="margin-left: 5px">+1-202-555-0151 </span>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-xs-6 col-md-6 no-margin no-padding">
+                        <div class="pull-right">
+                            <ul class="userMenu" id="userMenu">
+                                 <li id="rento-user-intro"><a href="#"><span class="hidden-xs"></span> </a></li>
+                                <li><a href="#"><span class="hidden-xs">My Account</span> <i class="glyphicon glyphicon-user hide visible-xs "></i></a></li>
+                                <li class="rento-hidden"><a href="#" data-toggle="modal" data-target="#modal-login" data-backdrop="static" data-keyboard="false"><span class="hidden-xs">Login </span>
+                                    <i class="glyphicon glyphicon-log-in hide visible-xs "></i></a></li>
+                                <li class="hidden-xs rento-hidden"><a href="#" data-toggle="modal" data-target="#modal-register" data-backdrop="static" data-keyboard="false">Create Account </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation </span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a class="navbar-brand " href="index.html">
+                    <!--logo-->
+                </a>
+
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav" id="rento-navbar-nav">
+                   
+                </ul>
+                <div class="nav navbar-nav navbar-right">
+                    <p>
+                        <button class="btn btn-1 btn-1a">Post a Product</button>
+                    </p>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <!-- Navbar Ends-->
+
+    <!--Main Slider-->
+    <div class="banner">
+        <div class="full-container">
+            <div class="slider-content">
+                <ul id="pager2" class="container">
+                </ul>
+
+                <!--slider search-->
+                <div id="rento-search-parallax">
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 rento-padding10 ui-widget" style="margin-left: 5px">
+                        <input type="text" name="rento-search-city" id="rento-search-city" class="input__field autocomplete-city" placeholder="Location" />
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-8 col-xs-7 rento-padding10" style="margin-left: -16px;">
+                        <input type="text" name="rento-search-category" id="rento-search-category" class="input__field autocomplete-multiparam" placeholder="Search catgories, sub-categories and more.."/>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 rento-nopadding">
+                        <button class="input__button">Search</button>
+                    </div>
+                </div>
+                <!--slider search-->
+
+                <span class="prevControl sliderControl"><i class="fa fa-angle-left fa-3x "></i></span><span class="nextControl sliderControl"><i class="fa fa-angle-right fa-3x "></i></span>
+                <div class="slider slider-v1" data-cycle-swipe="true" data-cycle-prev=".prevControl" data-cycle-next=".nextControl" data-cycle-loader="wait">
+                    <div class="slider-item slider-item-img1">
+                        <div class="sliderInfo">
+                            <div class="container">
+                                <div class="col-lg-12 col-md-12 col-sm-12 sliderTextFull ">
+                                    <div class="inner text-center">
+                                        <div class="topAnima animated">
+                                            <h1 class="uppercase xlarge" style="position: relative; left: -30px; top: -150px;color:#fff">WHY TO 
+                                                <span style="color:dodgerblue">BUY</span>?<br />WHEN YOU CAN <span style="color:dodgerblue">RENT</span> !</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="content/images/rento/sliders/slider1.jpg" class="img-responsive parallaximg sliderImg" alt="img" />
+                    </div>
+                    <div class="slider-item slider-item-img1">
+                        <img src="content/images/rento/sliders/slider1.jpg" class="img-responsive parallaximg sliderImg" alt="img" />
+                    </div>
+
+                    <div class="slider-item slider-item-img1">
+                        <div class="sliderInfo">
+                            <div class="container">
+                                <div class="col-lg-12 col-md-12 col-sm-12 sliderTextFull ">
+                                    <div class="inner text-center">
+                                        <div class="topAnima animated">
+                                            <h1 class="uppercase xlarge" style="position: relative; top: -150px; color: #fff">LIVING EXCELLENCE</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="content/images/rento/sliders/slider1.jpg" class="img-responsive parallaximg sliderImg" alt="img" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Slider Ends-->
+
+
+
+    <!--New Arrivals-->
+    <div class="container main-container" id="new_arrivals">
+
+        <div class="row featuredPostContainer globalPadding style2" id="new_arrivals_inner">
+            <h3 class="section-title style2 text-center"><span>NEW ARRIVALS</span></h3>
+        </div>
+    </div>
+    <!--New Arrivals Ends-->
+
+
+
+    <!--    Parrallex-->
+    <div class="parallax-section parallax-image-1">
+        <div class="container">
+            <div class="row ">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="parallax-content clearfix">
+                        <h1 class="parallaxPrce">RS.1500 </h1>
+                        <h2 class="uppercase">FREE SHIPPING! Get Free Shipping Coupons.</h2>
+                        <h3>Energistically develop parallel mindshare rather than premier deliverables. </h3>
+                        <div style="clear: both"></div>
+                        <a class="btn btn-discover "><i class="fa fa-shopping-cart"></i>SHOP NOW </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Parallex Ends-->
+
+
+
+    <div class="container main-container">
+        <div class="morePost row featuredPostContainer style2 globalPaddingTop" id="feature_products">
+            <h3 class="section-title style2 text-center"><span>FEATURES PRODUCT</span></h3>
+
+        </div>
+
+        <hr class="no-margin-top">
+        <div class="width100 section-block ">
+            <div class="row featureImg">
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <a href="category.html">
+                        <img src="../Content/images/new-collection-1.jpg" class="img-responsive" alt="img" /></a>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <a href="category.html">
+                        <img src="../Content/images/new-collection-2.jpg" class="img-responsive" alt="img" /></a>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <a href="category.html">
+                        <img src="../Content/images/new-collection-3.jpg" class="img-responsive" alt="img" /></a>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-6">
+                    <a href="category.html">
+                        <img src="../Content/images/new-collection-4.jpg" class="img-responsive" alt="img" /></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Brands-->
+        <div class="width100 section-block">
+            <h3 class="section-title"><span>BRAND</span> <a id="nextBrand" class="link pull-right carousel-nav"><i class="fa fa-angle-right"></i></a><a id="prevBrand" class="link pull-right carousel-nav"><i class="fa fa-angle-left"></i></a></h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="no-margin brand-carousel owl-carousel owl-theme">
+                        <li><a>
+                            <img src="../Content/images/brands/1.gif" alt="img" /></a></li>
+                        <li>
+                            <img src="../Content/images/brands/2.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/3.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/4.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/5.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/6.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/7.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/8.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/2.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/3.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/4.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/5.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/6.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/7.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/8.png" alt="img" /></li>
+                        <li>
+                            <img src="../Content/images/brands/2.png" alt="img" /></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Brands Ends-->
+
+
+    <div class="parallax-section parallax-image-2">
+        <div class="w100 parallax-section-overley">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="parallax-content clearfix">
+                            <h1 class="xlarge">Trusted Seller 500+ </h1>
+                            <h5 class="parallaxSubtitle">Lorem ipsum dolor sit amet consectetuer </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="productSetailsModalAjax" tabindex="-1" role="dialog" aria-labelledby="productSetailsModalAjaxLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3  col-md-3 col-sm-4 col-xs-6">
+                        <h3>Support </h3>
+                        <ul>
+                            <li class="supportLi">
+                                <p>Lorem ipsum dolor sit amet, consectetur </p>
+                                <h4><a class="inline" href="#"><strong><i class="fa fa-phone"></i>+1-202-555-0151 </strong></a></h4>
+                                <h4><a class="inline" href="#"><i class="fa fa-envelope-o"></i>
+                                    <span class="__cf_email__">e_shop123@Eshop.com</span>
+                                </a></h4>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3>Shop </h3>
+                        <ul>
+                            <li><a href="#">Men's
+                            </a></li>
+                            <li><a href="#">Women's</a></li>
+                            <li><a href="#">Kids'
+                            </a></li>
+                            <li><a href="#">Shoes
+                            </a></li>
+                            <li><a href="#">Gift Cards
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div style="clear: both" class="hide visible-xs"></div>
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3>Information </h3>
+                        <ul class="list-unstyled footer-nav">
+                            <li><a href="#">Questions?
+                            </a></li>
+                            <li><a href="#">Order Status
+                            </a></li>
+                            <li><a href="#">Sizing Charts
+                            </a></li>
+                            <li><a href="#">Return Policy </a></li>
+                            <li><a href="#">Contact Us
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                        <h3>My Account </h3>
+                        <ul>
+                            <li><a href="account.html">My Account </a></li>
+                            <li><a href="my-address.html">My Address </a></li>
+                            <li><a href="wishlist.html">Wish List </a></li>
+                            <li><a href="order-list.html">Order list </a></li>
+                            <li><a href="order-status.html">Order Status </a></li>
+                        </ul>
+                    </div>
+                    <div style="clear: both" class="hide visible-xs"></div>
+                    <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
+                        <h3>Stay in touch </h3>
+                        <ul>
+                            <li>
+                                <div class="input-append newsLatterBox text-center">
+                                    <input type="text" class="full text-center" placeholder="Email " />
+                                    <button class="btn  bg-gray" type="button">Subscribe <i class="fa fa-long-arrow-right"></i></button>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="social">
+                            <li><a href="http://facebook.com"><i class=" fa fa-facebook">&nbsp; </i></a></li>
+                            <li><a href="http://twitter.com"><i class="fa fa-twitter">&nbsp; </i></a></li>
+                            <li><a href="https://plus.google.com"><i class="fa fa-google-plus">&nbsp; </i></a></li>
+                            <li><a href="http://youtube.com"><i class="fa fa-pinterest">&nbsp; </i></a></li>
+                            <li><a href="http://youtube.com"><i class="fa fa-youtube">&nbsp; </i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="pull-left">&copy; Rento 2016. All right reserved. </p>
+                <div class="pull-right paymentMethodImg">
+                    <img height="30" class="pull-right" src="../Content/images/master_card.png" alt="img" />
+                    <img height="30" class="pull-right" src="../Content/images/visa_card.png" alt="img" />
+                    <img height="30" class="pull-right" src="../Content/images/paypal.png" alt="img" />
+                    <img height="30" class="pull-right" src="../Content/images/american_express_card.png" alt="img" />
+                    <img height="30" class="pull-right" src="../Content/images/discover_network_card.png" alt="img" />
+                    <img height="30" class="pull-right" src="../Content/images/google_wallet.png" alt="img" />
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <div class="modal fade hide" id="modalAds" role="dialog">
+        <div class="modal-dialog  modal-bg-1">
+            <div class="modal-body-content">
+                <a class="close" data-dismiss="modal">×</a>
+                <div class="modal-body">
+                    <div class="col-lg-6 col-sm-8 col-xs-8">
+                        <h3>enter your
+                            <br />
+                            email to receive</h3>
+                        <p class="discountLg">10% OFF </p>
+                        <p>
+                            We invite you to subscribe to our newsletter and receive 10% discount.
+                        </p>
+                        <div class="clearfx">
+                            <form id="newsletter" class="newsletter">
+                                <input type="text" id="subscribe" name="s" placeholder="Enter email" />
+                                <button class="subscribe-btn">Subscribe</button>
+                            </form>
+                        </div>
+                        <p>
+                            <a href="category.html" class="link shoplink">SHOP NOW <i class="fa fa-caret-right"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="content/components/jquery/js/jquery-2.1.4.min.js"></script>
+    <script src="content/components/jquery/js/jquery-migrate.min.js"></script>
+    <script src="content/components/bootstrap/js/bootstrap.min.js"></script>
+    <script src="content/components/notify/bootstrap-notify.min.js"></script>
+    <script src="content/js/modules/js.cookies.js"></script>
+    <script src="content/components/jquery/js/jquery.cycle2.min.js"></script>
+    <script src="content/components/jquery/js/jquery.easing.1.3.js"></script>
+    <script src="content/components/jquery/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="content/components/jquery/js/jquery.parallax-1.1.js"></script>
+    <script type="text/javascript" src="content/components/jquery/js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="content/components/jquery/js/jquery.mCustomScrollbar.js"></script>
+    <script src="content/components/icheck/js/icheck.min.js"></script>
+    <script src="content/js/grids.js"></script>
+    <script src="content/components/owl/js/owl.carousel.min.js"></script>
+    <script src="content/components/select2/js/select2.min.js"></script>
+    <script src="content/components/bootstrap/js/bootstrap.touchspin.js"></script>
+    <script src="content/js/home.js"></script>
+    <script src="content/js/script.js"></script>
+    <script src="content/js/modules/rentoApp_1.0.js"></script>
+    <script src="content/js/modules/app.js"></script>
+    <script src="content/components/parsley/js/parsley.min.js"></script>
+    <script type="text/javascript" src="content/js/modules/rentoApp_acc.js"></script>
+    <script>
+      
+    </script>
+</body>
+</html>

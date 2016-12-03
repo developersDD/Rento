@@ -1,0 +1,448 @@
+﻿body {
+}
+
+/*rento pre loader*/
+.no-js #loader {
+    display: none;
+}
+
+.js #loader {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0;
+}
+
+.se-pre-con {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../content/images/rento/loaders/loader.gif) center no-repeat #fff;
+}
+
+/*rento login/register pre loader*/
+.se-pre-con-login,.se-pre-con-register {
+    position: fixed;
+    display:none;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../content/images/rento/loaders/loader.gif) center no-repeat;
+}
+
+
+/*nav bar*/
+#bs-megadropdown-tabs .dropdown-menu .nav-tabs {
+    display: inline-block;
+    border-bottom: none;
+    padding-top: 10px;
+    font-weight: bold;
+    margin: 10px 0 -7px 0;
+}
+
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li > a,
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li > a:hover,
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li > a:focus,
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li.active > a,
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li.active > a:hover,
+    #bs-megadropdown-tabs .dropdown-menu .nav-tabs > li.active > a:focus {
+        border: none;
+        border-radius: 0;
+    }
+
+#bs-megadropdown-tabs .dropdown-menu .nav-list {
+    margin-left: 0;
+}
+
+    #bs-megadropdown-tabs .dropdown-menu .nav-list > li {
+        padding: 10px 25px 10px 25px;
+        margin: 0px 5px 5px 0;
+        border: none;
+        transition: border 0.3s;
+        box-shadow: 0px 1px 7px -2px black;
+        -webkit-box-shadow: 0px 1px 7px -2px black;
+        -moz-box-shadow: 0px 1px 7px -2px black;
+    }
+
+        #bs-megadropdown-tabs .dropdown-menu .nav-list > li > a:hover {
+            text-decoration: none;
+        }
+
+        #bs-megadropdown-tabs .dropdown-menu .nav-list > li > a > span {
+            display: block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-family: 'HP Simplified';
+        }
+
+#bs-megadropdown-tabs .dropdown-menu.mega-dropdown {
+    position: static !important;
+}
+
+#bs-megadropdown-tabs .dropdown-menu.mega-dropdown-menu {
+    padding: 15px 15px;
+    text-align: center;
+    width: 100%;
+}
+
+#bs-megadropdown-tabs .dropdown-menu .nav-list > li img {
+    height: 40px;
+    width: 40px;
+}
+
+
+/*login and register modal*/
+#modal-login .modal-dialog, #modal-register .modal-dialog {
+    max-width: 350px;
+}
+
+#modal-login .modal-body, #modal-register .modal-body {
+    padding: 0px 15px 20px 15px;
+}
+
+#modal-login .input__field, #modal-register .input__field {
+    width: 100%;
+    font-family: 'HP Simplified';
+    font-size: 14px;
+}
+
+
+.input__button {
+    background: #3498db;
+    border: 0 none;
+    border-radius: 0;
+    width: 100%;
+    margin: 0px 0px 15px 0px;
+    color: #fff;
+    float: left;
+    font-weight: normal;
+    height: 40px;
+    line-height: normal;
+    padding: 0 10px;
+    transition: border 0.3s;
+    box-shadow: -2px 3px 15px -2px black;
+    -moz-box-shadow: -2px 3px 15px -2px black;
+    -webkit-box-shadow: -2px 3px 15px -2px black;
+    outline:none;
+}
+
+.input__button:hover {
+        background: #2980b9;
+    }
+
+  .modal__button {
+    font-weight: 700;
+    background-color: white;
+    border-top: 2px solid #2980b9;
+    color: #2980b9;
+    height: 43px;
+    text-align: center;
+    padding: 11px 0;
+}
+
+    .modal__button:hover {
+    background-color:whitesmoke;
+    }
+
+.rento-fgpwd {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    text-align:right;
+}
+   .rento-fgpwd a,.rento-fgpwd p {
+    display: inline-block;
+    max-width: 100%;
+    height:25px;
+    font-weight: 700;
+    letter-spacing:0.2px;
+    }
+
+    .rento-fgpwd a {
+    padding: 0px 2px 0px 0px;
+    color:#3498db;
+    cursor: pointer;
+    margin-right:5px;
+    }
+
+    .rento-fgpwd p {
+    padding:0;
+    margin:0px 12px 0px 0px;
+    margin-right:20px;
+    color:#888888;
+    }
+
+/*slider image filter*/
+.sliderImg {
+    -moz-filter: brightness(.5);
+    -webkit-filter: brightness(.5);
+    filter: brightness(.5);
+}
+
+
+/*social buttons*/
+
+
+/*rento boxes*/
+
+
+/*search parallax index*/
+
+#rento-search-parallax {
+    position: absolute;
+    bottom: 46%;
+    z-index: 100;
+    height: auto;
+    background-color: transparent;
+    width: 60%;
+    z-index: 200;
+    margin: 0 auto;
+    margin-left: 19%;
+    padding: 0;
+    text-align: center;
+    box-shadow: 1px 2px -1px 1px black;
+    -webkit-box-shadow: 1px 2px -1px 1px black;
+    -moz-box-shadow: 1px 2px -1px 1px black;
+}
+
+
+    #rento-search-parallax .input__field {
+        margin: 10px 0px 10px 0px;
+        width: 100%;
+        font-family: 'HP Simplified';
+        font-size: 14px;
+        background-color: white;
+        padding: 10px;
+        transition: border 0.3s;
+        box-shadow: 2px 10px 15px -2px black;
+        -webkit-box-shadow: 2px 10px 15px -2px black;
+        -moz-box-shadow: 2px 10px 15px -2px black;
+    }
+     
+    #rento-search-parallax .input__button {
+        margin: 9px 0px 9px -6px;
+        height: 38px;
+    }
+
+
+
+/*search parallax autocomplete index*/
+
+.ui-autocomplete {
+    position: absolute;
+    z-index: 1000 !important;
+    cursor: default;
+    padding: 0;
+    margin-top: 2px;
+    list-style: none;
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: border 0.3s;
+    box-shadow: 2px 10px 15px -2px black;
+    -webkit-box-shadow: 2px 10px 15px -2px black;
+    -mo-box-shadow: 2px 10px 15px -2px black;
+}
+
+    .ui-autocomplete > li {
+        padding: 10px 20px;
+        margin: 2px 0px;
+    }
+
+        .ui-autocomplete > li.ui-state-focus {
+            background-color: #DDD;
+        }
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+/*search parallax overlay*/
+.rento-overlay {
+}
+
+
+/*generic class*/
+.rento-hidden {
+display:none;
+}
+
+.rento-padding10 {
+    padding: 0px 10px 0px 10px;
+}
+
+.rento-nopadding {
+    padding: 0;
+}
+
+
+
+
+/*account*/
+.main-container {
+width:95%;
+}
+.main-container .container {
+width: 100%;
+}
+
+.inner-box {
+      transition: border 0.3s;
+    box-shadow: 0px 0px 10px 0px gray;
+    -webkit-box-shadow: 0px 0px 10px 0px gray;
+    -moz-box-shadow: 0px 0px 10px 0px gray; 
+    margin-bottom: 30px;
+    padding: 15px 0px;
+}
+
+.page-sidebar .inner-box {
+    margin-left:-14px;
+}
+    .inner-box .nav-tabs {
+    border:0;
+    }
+
+.page-content .inner-box {
+    padding: 15px;
+}
+
+.collapse-box {
+    margin-bottom: 15px;
+}
+
+.collapse-title {
+    /*border-top: 1px solid #e6e6e6;*/
+    color: #2a3744;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-left:15px;
+    text-transform: uppercase;
+}
+
+.page-sidebar {
+width:20%;
+}
+    .user-panel-sidebar ul {
+    padding:0;
+    }
+
+.user-panel-sidebar {
+    padding: 0px 10px 0px 10px;
+    min-height:400px;
+}
+
+.user-panel-sidebar ul li {
+    list-style: none;
+    width:100%;
+    padding:5px;
+}
+
+.user-panel-sidebar ul li a {
+    background: none repeat scroll 0 0 #ffffff;
+    display: block;
+    font-family: 'HP Simplified';
+    color: #2a3744;
+    font-size: 14px;
+    height: auto;
+    letter-spacing: 0.2px;
+    line-height: 26px;
+    padding: 5px 10px;
+    margin-bottom: 1px;
+    text-align: left;
+    text-decoration: none;
+    text-transform:capitalize;
+}
+
+    .user-panel-sidebar h5 {
+        font-family: 'HP Simplified';
+        letter-spacing: 0.1px;
+        font-weight:400;
+    }
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus, .nav-tabs > li:hover > a, .acc-list > li:hover > a {
+     background-color:#337ab7 ;
+    color: #FFFFFF;
+}
+
+.user-panel-sidebar ul li a.active {
+    background-color: #337ab7;
+    color: #FFFFFF;
+}
+
+.title-2 {
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.page-content {
+width:80%;
+padding:0;
+}
+
+.se-pre-con-tabs {
+    position: absolute;
+    display:none;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../content/images/rento/loaders/loader.gif) center no-repeat;
+}
+
+
+
+
+/*file upload input avatar*/
+.kv-avatar .file-input .file-preview {
+    border-radius: 0px;
+    border: 0;
+    transition: border 0.3s;
+    box-shadow: 0px 0px 10px 0px gray;
+    -webkit-box-shadow: 0px 0px 10px 0px gray;
+    -moz-box-shadow: 0px 0px 10px 0px gray;
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    width: 100%;
+}
+.kv-avatar .file-input {
+    display: table-cell;
+    min-width: 260px;
+}
+
+.kv-avatar .file-input .file-preview .file-default-preview h6 {
+    position: relative;
+    font-size: 12px;
+    font-weight: 700;
+    margin:10px 0px 0px 27%;
+}
