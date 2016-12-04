@@ -23,17 +23,77 @@
 
     //post product form submit.
     $('#postProductForm #btnSubmitProductDetails').on('click', function () {
-        if ($('#postProductForm').parsley().isValid()) {
-            var imageValidated = validateProductImages();
-            if (imageValidated == 'empty object') {
-                rentoModalAlert('Please select atleast one image !');
-            } else {
-                //post a product
-                //postUserProduct();
-            }
+        var validProduct = validateProduct();
+        if (validProduct) {
+            //post user product.
+            animateProductFormTabsLoader('start', 'post');
+            postUserProduct(validProduct);
         }
     });
 
+    //validate product details.
+    function validateProduct() {
+        if ($('#postProductForm').parsley().isValid()) {
+            var productData,
+            imageValidated = validateProductImages();
+            if (imageValidated == 'empty object') {
+                rentoModalAlert('Please select atleast one image !');
+            } else {
+               productData = createUserProductRequestData(imageValidated);
+            }
+        } else {
+            rentoModalAlert('Please fill in all the required fields !');
+        }
+        return productData;
+    }
+
+    //create user product data
+    function createUserProductRequestData(validImages) {
+        var productDetails = new Object();
+        var product = new Object();
+        var address = new Object();
+        var image = new Object();
+        productDetails.name = $('#product-name').val();
+        productDetails.description = $('#product-desc').val();
+        productDetails.category = $('#category').val();
+        productDetails.sub_category = $('#sub-category').val();
+        productDetails.rate_per_day = $('#rate-per-day').val();
+        productDetails.owner_id = Cookies.get('uid');
+        productDetails.from_date = $('#product-valid-from').val();
+        productDetails.to_date = $('#product-valid-till').val();
+        productDetails.ad_type = $('input[name="ad-type"]').val();
+        productDetails.terms_condition = $('#terms-conditions').val();
+        productDetails.product_type = 1;
+        productDetails.deposit = $('#product-deposit').val();
+        address.area = $('#product-add-area').val();
+        address.city_id = $('#product-add-city').val();
+        address.state_id = $('#product-add-state').val();
+        address.country_id = $('#product-add-country').val();
+        address.pincode = $('#product-add-pin').val();
+
+        productDetails.address = address;
+        productDetails.product_images = validImages;
+        product.productDetails = productDetails;
+        var productData = JSON.stringify(product);
+        return productData;
+    }
+
+    //post user product
+    function postUserProduct(data) {
+        var lclUrl = serviceGblURL + "product/addproduct";
+        var clbck = {
+            scs: function (rsp) {
+                var response = JSON.parse(rsp);
+                console.log(rsp);
+                animateProductFormTabsLoader('stop', 'post');
+            },
+            flr: function (rsp) {
+                animateProductFormTabsLoader('stop', 'post');
+            }
+        };
+        RentoApp.RentoAjax.AjaxHttp(lclUrl, "POST", data, clbck);
+    }
+    
     //validate product images.
     function validateProductImages() {
         var imageObj,
@@ -53,14 +113,18 @@
 
     //get images if validated.
     function getBase64ProductImages(validImage) {
-        var imageObj = [];
+        var imageObj = {};
         //set of 4 images tobe uploaded.
         for (var i = 0; i <= 3; i++) {
             if (validImage[i]) {
-                var imageData = validImage[i].siblings().children().find('img').attr('src');
-                   imageObj.push('{"image'+i+'":"'+imageData+'"}');
+                var item = {},
+                 imageData = validImage[i].siblings().children().find('img').attr('src');
+                 imageObj["image" + i] = imageData;
+                   //imageObj.push('{"image'+i+'":"'+imageData+'"}');
             } else {
-                imageObj.push('{"image' + i + '":"empty"}');
+                var item = {};
+                imageObj["image" + i] = "empty";
+                //imageObj.push('{"image' + i + '":"empty"}');
             }
         }
         return imageObj;
@@ -206,7 +270,6 @@
             var navListItems = $('ul.setup-panel li a'),
             allWells = $('.setup-content'),
             allNextBtn = $('.nextBtn');
-
             allWells.hide();
             navListItems.click(function (e) {
                 e.preventDefault();
