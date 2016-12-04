@@ -3148,7 +3148,7 @@ h5.parallaxSubtitle {
 }
 
 .main-container {
-    min-height: 580px;
+    min-height: 480px;
 }
 
 .headerOffset {
@@ -3759,11 +3759,11 @@ button.first {
 }
 
 .product-share {
-    border-top: 1px solid #DDDDDD;
+    /*border-top: 1px solid #DDDDDD;*/
     clear: both;
     display: inline-block;
-    margin-top: 20px;
-    padding-top: 14px;
+    margin-top: 10px;
+    padding-top: 10px;
     width: 100%;
 }
 
@@ -3771,11 +3771,11 @@ button.first {
     background: #CCCCCC;
     color: #FFFFFF;
     display: inline-block;
-    font-size: 22px;
-    padding: 6px 3px;
-    margin-right: 10px;
+    font-size: 15px;
+    padding: 5px 3px;
+    margin-right: 5px;
     text-align: center;
-    width: 35px;
+    width: 30px;
     transition: all 0.15s ease-in-out 0s;
     -moz-transition: all 0.15s ease-in-out 0s;
     -webkit-transition: all 0.15s ease-in-out 0s;

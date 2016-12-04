@@ -1,11 +1,14 @@
 ﻿(function () {
-
+    //start with update product - set details in the modal popup.
     var cnfg = RentoApp.Config;
     var cnstnt = RentoApp.Constants;
     var utilityGblURL = cnfg.localBaseUrl + cnstnt.FWD_SLASH + cnstnt.RENTOMOJO + cnstnt.FWD_SLASH +
                   cnstnt.SERVICES + cnstnt.FWD_SLASH + cnstnt.UTILITY + cnstnt.FWD_SLASH;
     var serviceGblURL = cnfg.localBaseUrl + cnstnt.FWD_SLASH + cnstnt.RENTOMOJO + cnstnt.FWD_SLASH +
                  cnstnt.SERVICES + cnstnt.FWD_SLASH;
+
+    //init product image file input
+    $(".product_image").fileinput();
 
     if ($('#postProductContainer').length) {
             //animate loader.
@@ -14,7 +17,108 @@
             initProductFormTabs();
             getProductCategories('');
             initProductImageInput();
+    } else if ($('#updateProductContainer').length) {
+        //get user products.
+        animateProductFormTabsLoader('start', 'bag');
+        getUserProducts(Cookies.get('uid'));
+        //call product manipulation.
+        initProductFormTabs();
+        getProductCategories('');
     }
+
+    //get all the user products.
+    function getUserProducts(id) {
+        var lclUrl = serviceGblURL + "user/product/" + id;
+        var clbck = {
+            scs: function (rsp) {
+                var response = JSON.parse(rsp);
+                animateProductFormTabsLoader('start', 'bag');
+                userProductDisplay(response);
+            },
+            flr: function (rsp) {
+                animateProductFormTabsLoader('stop', 'bag');
+            }
+        };
+        RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
+    }
+
+    //display all user products.
+    function userProductDisplay(data) {
+        var imageUrl = cnfg.localBaseUrl + cnstnt.FWD_SLASH + "retomojo/images" + cnstnt.FWD_SLASH;
+        var dt = $('#rento-products-bag').DataTable({
+            aLengthMenu: [
+                [5,10, 25, 50, 100, 200, -1],
+                [5,10, 25, 50, 100, 200, "All"]
+            ],
+            destroy: true,
+            iDisplayLength: 5,
+            "columns": [
+             { "data": "0" },
+            { "data": "1" },
+            { "data": "2" },
+            { "data": "3" }],
+            "order": [[1, 'asc']]
+        });
+        //Adding data to Datatable
+        for (var i = 0; i < data.length; i++) {
+            var image = 'content/images/rento/navbar/mobile.png',
+                productType = 'Rented',
+                productTypeElement = '<span class="label label-primary">'+productType+'</span>';
+            if (data[i].image[0]) {
+                image = imageUrl + data[i].image[0].image_name
+            }
+            if (data[i].product_type == '2') {
+                productType = 'Hired';
+            }
+            var productBox1 = '<img src=" ' + image + '" style="height:130px;width:150px;"/>',
+                productBox2 = '<div><br><h3><b>' + data[i].name + '</b></h3><p style="max-width:70%">' + data[i].description + ''+
+                '</p><small>Posted on : ' + data[i].posted_date + '</small><br>' + productTypeElement+'</div>',
+                productBox3 = '<div style="text-align:center"><br><h3><b>Rs. ' + data[i].rate_per_day + '</b><small> /per day</small>'+
+                              '</h3>' +
+                              '<a href="#" id="terms_condition_' + i + "_" + data[i].id + '"><label class="label label-success">' +
+                              'Terms and Conditions</label></a></div>',
+
+                productBox4 = '<div class="text-center center-block" style="width:250px">' +
+                            '<div class="product-share clearfix"><div class="socialIcon">' +
+                            '<a href="#" class="rento-product-actions" data-toggle="modal" data-target="#product-details-modal"' +
+                            'data-backdrop="static" data-keyboard="false"' +
+                            'id="viewProduct_' + i +"_"+ data[i].id + '"> <i class="fa fa-eye"></i></a>' +
+                            '<a href="#" class="rento-product-actions" data-toggle="modal" data-target="#updateProductContainer"' +
+                            'data-backdrop="static" data-keyboard="false"'+
+                            'id="editProduct_' + i + "_" + data[i].id + '"> <i class="fa fa-edit"></i></a>' +
+                            '<a href="#" class="rento-product-actions" id="deleteProduct_' + i + "_" + data[i].id + '">'+
+                            '<i class="fa fa-trash"></i></a></div>' +
+                            '<div class="clearfix"><br><p>SHARE </p>' +
+                            '<a href="#"><i id="social-fb" class="fa fa-facebook-square fa-2x social"></i></a>' +
+                             '<a href="#"><i id="social-tw" class="fa fa-twitter-square fa-2x social"></i></a>' +
+                             '<a href="#"><i id="social-gp" class="fa fa-google-plus-square fa-2x social"></i></a>' +
+                             '<a href="#"><i id="social-em" class="fa fa-envelope-square fa-2x social"></i></a>' +
+                            '</div>' +
+                            '</div>';
+                             
+            dt.row.add([productBox1, productBox2,productBox3,productBox4, data[i].category,
+                            data[i].sub_category, data[i].terms_condition,
+                            data[i].to_date, data[i].from_date, data[i].deposite, data[i].product_type,
+                            data[i].rate_per_day
+            ]).draw(false);
+        }
+        animateProductFormTabsLoader('stop', 'bag');
+        //action button click event.
+        $('#rento-products-bag tbody').on('click', '.rento-product-actions', function () {
+            var $id = $(this).attr('id'),
+                $product = $id.split("_")[1];
+            if ($id.split("_")[0] == 'editProduct') {
+                getProductCategories(data[$product].category);
+            }
+        });
+    }
+
+    //updateProductContainer mannipulation.
+    $('#updateProductContainer').on('shown.bs.modal', function () {
+        initProductImageInput();
+    }).on('hidden.bs.modal', function () {
+        //do something.
+    });
 
     //prevent forms from submitting.
     $('#postProductForm').on('submit', function (e) {
@@ -84,7 +188,7 @@
         var clbck = {
             scs: function (rsp) {
                 var response = JSON.parse(rsp);
-                console.log(rsp);
+                rentoModalAlert(response.msg);
                 animateProductFormTabsLoader('stop', 'post');
             },
             flr: function (rsp) {
@@ -120,11 +224,9 @@
                 var item = {},
                  imageData = validImage[i].siblings().children().find('img').attr('src');
                  imageObj["image" + i] = imageData;
-                   //imageObj.push('{"image'+i+'":"'+imageData+'"}');
             } else {
                 var item = {};
                 imageObj["image" + i] = "empty";
-                //imageObj.push('{"image' + i + '":"empty"}');
             }
         }
         return imageObj;
@@ -163,22 +265,26 @@
 
         //get product categories.
         function getProductCategories(selectedValue) {
-            var lclUrl = serviceGblURL + "category/list";
-            var clbck = {
-                scs: function (rsp) {
-                    var response = JSON.parse(rsp);
-                    if (response.length > 0) {
-                        for (var i = 0; i < response.length; i++) {
-                            $("#category").append($("<option></option>").val(response[i].id).html(response[i].name));
+            if (!selectedValue) {
+                var lclUrl = serviceGblURL + "category/list";
+                var clbck = {
+                    scs: function (rsp) {
+                        var response = JSON.parse(rsp);
+                        if (response.length > 0) {
+                            for (var i = 0; i < response.length; i++) {
+                                $("#category").append($("<option></option>").val(response[i].id).html(response[i].name));
+                            }
                         }
+                        animateProductFormTabsLoader('stop', 'post');
+                    },
+                    flr: function (rsp) {
+                        animateProductFormTabsLoader('stop', 'post');
                     }
-                    animateProductFormTabsLoader('stop', 'post');
-                },
-                flr: function (rsp) {
-                    animateProductFormTabsLoader('stop', 'post');
-                }
-            };
-            RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
+                };
+                RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
+            } else {
+                $('#category').select2('val', selectedValue);
+            }
         }
 
         //get product categories.
@@ -293,17 +399,17 @@
                     formElements = "input[type='text'],input[type='email'],input[type='number'],input"+                                                                           "[type='date'],input[type='radio'],select,textarea",
                     curInputs = curStep.find(formElements),
                     isValid = 0;
-                //for (var i = 0; i < curInputs.length; i++) {
-                //    var elem = curInputs[i],
-                //        elemId = $(elem).attr("id");
-                //    if ($("#" + elemId).parsley().isValid()) {
-                //        isValid++;
-                //    } else {
-                //        $("#" + elemId).parsley().validate();
-                //    }
-                //}
+                for (var i = 0; i < curInputs.length; i++) {
+                    var elem = curInputs[i],
+                        elemId = $(elem).attr("id");
+                    if ($("#" + elemId).parsley().isValid()) {
+                        isValid++;
+                    } else {
+                        $("#" + elemId).parsley().validate();
+                    }
+                }
 
-                //if (isValid == curInputs.length) {
+                if (isValid == curInputs.length) {
                     nextStepWizardLi.removeClass('disabled').addClass('active');
                     nextStepWizard.trigger('click');
                     if (curStepBtn == 'step-2') {
@@ -313,17 +419,17 @@
                             getCountries('');
                         }
                     }
-                //}
+                }
             });
 
             $('ul.setup-panel li.active a').trigger('click');
         }
 
         function initProductImageInput() {
-            $(".product_image").fileinput({
+            $(".product_image").fileinput('refresh',{
                 overwriteInitial: true,
                 maxFileSize: 5000,
-                showClose: false,
+                showClose: true,
                 showCaption: false,
                 showBrowse: false,
                 browseOnZoneClick: true,

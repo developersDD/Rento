@@ -133,7 +133,7 @@
                     </aside>
                 </div>
 
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 page-content">
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 page-content" id="bagProductContainer">
                     <div class="inner-box" id="rento-products-innerbox">
                         <h2 class="title-2"><i class="icon-folder-close"></i>My Bag </h2>
                         <div class="w100 productFilter clearfix">
@@ -152,7 +152,15 @@
                                 <div class="change-view pull-right"><a href="#" title="Grid" class="grid-view"><i class="fa fa-th-large"></i></a><a href="#" title="List" class="list-view "><i class="fa fa-th-list"></i></a></div>
                             </div>
                         </div>
-                        <table id="rento-products-bag" class="table">
+                        <table id="rento-products-bag" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <td style="width:20%"></td>
+                                    <td style="width:30%"></td>
+                                    <td style="width:25%"></td>
+                                    <td style="width:25%"></td>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <!--<tr>
                                   <td>
@@ -198,10 +206,11 @@
                         </table>
                     </div>
                 </div>
-
+                 <div class="se-pre-con-tabs"></div>
             </div>
 
         </div>
+       
     </div>
 
 
@@ -440,7 +449,6 @@
                                     </div>
 
                                 </div>
-                                <div class="se-pre-con-tabs"></div>
                             </div>
                         </div>
                 </div>
@@ -449,13 +457,123 @@
 
                 <div class="modal-footer">
                 </div>
-                <!--loader-->
-                <div class="se-pre-con-login"></div>
-                <!--loader-->
             </div>
         </div>
     </div>
     <!--product details modal ends-->
+
+<div class="modal fade" id="product-details-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<button aria-hidden="true" data-dismiss="modal" class="close" type="button"> ×</button>
+<div class="col-lg-5 col-md-5 col-sm-5  col-xs-12">
+ 
+<div class="main-image  col-lg-12 no-padding style3">
+<a class="product-largeimg-link" href="product-details.html"><img src="images/product_details/low-res-white/1.jpg" class="img-responsive product-largeimg" alt="img">
+</a>
+</div>
+ 
+<div class="modal-product-thumb">
+<a class="thumbLink selected"><img data-large="images/product_details/low-res-white/1.jpg" alt="img" class="img-responsive" src="images/product_details/low-res-white/1.jpg">
+</a>
+<a class="thumbLink"><img data-large="images/product_details/low-res-white/2.jpg" alt="img" class="img-responsive" src="images/product_details/low-res-white/2.jpg">
+</a>
+<a class="thumbLink"><img data-large="images/product_details/low-res-white/3.jpg" alt="img" class="img-responsive" src="images/product_details/low-res-white/3.jpg">
+</a>
+</div>
+ 
+</div>
+ 
+<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 modal-details no-padding">
+<div class="modal-details-inner">
+<h1 class="product-title"> Lorem ipsum dolor sit amet</h2>
+<h3 class="product-code">Product Code : DEN1098</h3>
+<div class="product-price"><span class="price-sales"> $70</span> <span class="price-standard">$95</span></div>
+<div class="details-description">
+<p>In scelerisque libero ut elit porttitor commodo Suspendisse laoreet magna. </p>
+</div>
+<div class="color-details"><span class="selected-color"><strong>COLOR</strong></span>
+<ul class="swatches Color">
+<li class="selected">
+<a style="background-color:#f1f40e"> </a>
+</li>
+<li>
+<a style="background-color:#adadad"> </a>
+</li>
+<li>
+<a style="background-color:#4EC67F"> </a>
+</li>
+</ul>
+</div>
+ 
+<div class="productFilter productFilterLook2">
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-xs-6">
+<div class="filterBox">
+<select class="form-control">
+<option value="strawberries" selected>Quantity</option>
+<option value="mango">1</option>
+<option value="bananas">2</option>
+<option value="watermelon">3</option>
+<option value="grapes">4</option>
+<option value="oranges">5</option>
+<option value="pineapple">6</option>
+<option value="peaches">7</option>
+<option value="cherries">8</option>
+</select>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-xs-6">
+<div class="filterBox">
+<select class="form-control">
+<option value="strawberries" selected>Size</option>
+<option value="mango">XL</option>
+<option value="bananas">XXL</option>
+<option value="watermelon">M</option>
+<option value="apples">L</option>
+<option value="apples">S</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+ 
+<div class="cart-actions">
+<div class="addto row">
+<div class="col-lg-6">
+<button onclick="productAddToCartForm.submit(this);" class="button btn-block btn-cart cart first" title="Add to Cart" type="button">
+Add to Cart
+</button>
+</div>
+<div class="col-lg-6"><a class="link-wishlist wishlist btn-block ">Add to Wishlist</a>
+</div>
+</div>
+</div>
+ 
+<div class="product-share clearfix">
+<p> SHARE </p>
+<div class="socialIcon">
+<a href="#"> <i class="fa fa-facebook"></i>
+</a>
+<a href="#"> <i class="fa fa-twitter"></i>
+</a>
+<a href="#"> <i class="fa fa-google-plus"></i>
+</a>
+<a href="#"> <i class="fa fa-pinterest"></i>
+</a>
+</div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="clear"></div>
+</div>
+ 
+</div>
+ 
+</div>
 
     <footer>
         <div class="footer">
