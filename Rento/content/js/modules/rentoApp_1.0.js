@@ -101,6 +101,7 @@ extend(RentoApp, {
     Config: {
         baseUrl: "",
         localBaseUrl: "http://192.168.0.18"
+        //localBaseUrl: "http://192.168.200.43"
         },
             Constants: {
                     EQUALS_OPERATOR: "=",

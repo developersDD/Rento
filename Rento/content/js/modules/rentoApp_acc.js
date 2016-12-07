@@ -1,5 +1,5 @@
 ﻿(function () {
-    //start with update product - set details in the modal popup.
+    //update product - validate image remaining and then view product.
     var cnfg = RentoApp.Config;
     var cnstnt = RentoApp.Constants;
     var utilityGblURL = cnfg.localBaseUrl + cnstnt.FWD_SLASH + cnstnt.RENTOMOJO + cnstnt.FWD_SLASH +
@@ -96,10 +96,7 @@
                             '</div>' +
                             '</div>';
                              
-            dt.row.add([productBox1, productBox2,productBox3,productBox4, data[i].category,
-                            data[i].sub_category, data[i].terms_condition,
-                            data[i].to_date, data[i].from_date, data[i].deposite, data[i].product_type,
-                            data[i].rate_per_day
+            dt.row.add([productBox1, productBox2,productBox3,productBox4
             ]).draw(false);
         }
         animateProductFormTabsLoader('stop', 'bag');
@@ -109,25 +106,73 @@
                 $product = $id.split("_")[1];
             if ($id.split("_")[0] == 'editProduct') {
                 getProductCategories(data[$product].category);
+                getProductSubCategoriesByCategoryId(data[$product].category, data[$product].sub_category);
+                $('#product-name').val(data[$product].name);
+                $('#product-desc').val(data[$product].description);
+                $('#terms-conditions').val(data[$product].terms_condition);
+                $('#rate-per-day').val(data[$product].rate_per_day);
+                $('#product-deposit').val(data[$product].deposit);
+                $('#product-valid-from').val(data[$product].from_date);
+                $('#product-valid-till').val(data[$product].to_date);
+                data[$product].ad_type == 0 ? $('#ad-type-normal').iCheck('check') :
+                                              $('#ad-type-premium').iCheck('check');
+                getCountries(data[$product].address[0].country_id);
+                getStatesByCountryId(data[$product].address[0].country_id, data[$product].address[0].state_id);
+                getCitiesByStateId(data[$product].address[0].state_id, data[$product].address[0].city_id);
+                $('#product-add-pin').val(data[$product].address[0].pincode);
+                $('#product-add-area').val(data[$product].address[0].area);
+                updateProductImageInput(data[$product].image);
             }
         });
     }
 
+    //update the user product images.
+    function updateProductImageInput(images) {
+        if (images) {
+            for(var i=0;i<=3;i++){
+                var imagePath = 'content/images/rento/navbar/mobile.png',
+                    imgId='rento_empty_product_image_'+(i+1);
+                if(images[i]){
+                    imagePath = cnfg.localBaseUrl + cnstnt.FWD_SLASH + "/retomojo/images/" + images[i].image_name,
+                    imgId = 'rento_product_image_'+images[i].id;
+                }
+                $("#product_image_" + (i + 1)).fileinput('refresh', {
+                    overwriteInitial: true,
+                    maxFileSize: 5000,
+                    showClose: true,
+                    showCaption: false,
+                    showBrowse: false,
+                    browseOnZoneClick: true,
+                    removeLabel: '',
+                    removeIcon: '',
+                    removeTitle: 'Cancel or reset changes',
+                    elErrorContainer: '#kv-avatar-errors-2',
+                    msgErrorClass: 'alert alert-block alert-danger',
+                    defaultPreviewContent: '<img src="' + imagePath + '"' +'alt="Your Image" '+
+                        'id="'+imgId+'" style="width:160px;position:relative;margin:5px 0px 5px 40px">' +
+                                            '<h6 class="text muted" style="position:relative;margin-left:35%">Click to select</h6>',
+                    layoutTemplates: { main2: '{preview} {remove} {browse}' },
+                    allowedFileExtensions: ["jpg", "png", "gif"]
+                });
+            }
+           
+        }
+    }
+
     //updateProductContainer mannipulation.
     $('#updateProductContainer').on('shown.bs.modal', function () {
-        initProductImageInput();
     }).on('hidden.bs.modal', function () {
         //do something.
     });
 
     //prevent forms from submitting.
-    $('#postProductForm').on('submit', function (e) {
+    $('#postProductForm,#updateProductForm').on('submit', function (e) {
         e.preventDefault();
     });
 
     //post product form submit.
     $('#postProductForm #btnSubmitProductDetails').on('click', function () {
-        var validProduct = validateProduct();
+        var validProduct = validateProduct('post');
         if (validProduct) {
             //post user product.
             animateProductFormTabsLoader('start', 'post');
@@ -135,11 +180,20 @@
         }
     });
 
+    //update product form submit.
+    $('#updateProductForm #btnUpdateProductDetails').on('click', function () {
+        var validProduct = validateProduct('update');
+        if (validProduct) {
+            //post user product.
+            console.log("-->"+validProduct);
+        }
+    });
+
     //validate product details.
-    function validateProduct() {
-        if ($('#postProductForm').parsley().isValid()) {
+    function validateProduct(validateType) {
+        if ($('#' + validateType + 'ProductForm').parsley().isValid()) {
             var productData,
-            imageValidated = validateProductImages();
+            imageValidated = validateProductImages(validateType);
             if (imageValidated == 'empty object') {
                 rentoModalAlert('Please select atleast one image !');
             } else {
@@ -199,15 +253,15 @@
     }
     
     //validate product images.
-    function validateProductImages() {
-        var imageObj,
+    function validateProductImages(validateType) {
+        var imageObj,imagePath="content/images/rento/navbar/mobile.png",
             validFields = $('.product_image').map(function () {
-            if ($(this).val() != "")
+                if ($(this).val() != "" || $(this).siblings().children().find('img').attr('src') != imagePath)
                 return $(this);
         }).get();
 
         if (validFields.length) {
-            imageObj = getBase64ProductImages(validFields);
+            imageObj = getBase64ProductImages(validFields, validateType);
         }
         else {
             imageObj = 'empty object';
@@ -216,51 +270,69 @@
     }
 
     //get images if validated.
-    function getBase64ProductImages(validImage) {
+    function getBase64ProductImages(validImage,validateType) {
         var imageObj = {};
         //set of 4 images tobe uploaded.
         for (var i = 0; i <= 3; i++) {
+            var item = {};
             if (validImage[i]) {
-                var item = {},
-                 imageData = validImage[i].siblings().children().find('img').attr('src');
-                 imageObj["image" + i] = imageData;
+                var imageData = validImage[i].siblings().children().find('img').attr('src'),
+                    imageId = validImage[i].siblings().children().find('img').attr('id');
+                if (imageData.match('data:image/')) {
+                    item['id'] = imageId;
+                    item['data'] = validImage;
+                    imageObj['image' + i] = item;
+                } else {
+                    item['id'] = '-1';
+                    item['data'] = 'empty';
+                    imageObj['image' + i] = item;
+                }
             } else {
-                var item = {};
-                imageObj["image" + i] = "empty";
+                item['id'] = '-1';
+                item['data'] = 'empty';
+                imageObj['image' + i] = item;
             }
         }
+        console.log(imageObj);
         return imageObj;
     }
 
 
         //empty subcategories on category change.
-        $('#category').on('change', function () {
+    $('#category').on('change', function () {
+        var $cid = $(this).val();
+        $('#sub-category')
+               .empty()
+               .append('<option selected="selected" value="0">Choose sub-category</option>');
+        if ($cid != 0) {
             animateProductFormTabsLoader('start', 'post');
-            var $cid = $(this).val();
-            $('#sub-category')
-                .empty()
-                .append('<option selected="selected" value="0">Choose</option>');
-                getProductSubCategoriesByCategoryId($cid,'');
-        });
+            getProductSubCategoriesByCategoryId($cid, '');
+        }
+        
+    });
 
         //empty states,cities on country change.
         $('#product-add-country').on('change', function () {
-            var $sid = $(this).val();
+            var $cid = $(this).val();
             $('.address-common-fields')
                 .empty()
                 .append('<option selected="selected" value="0">Choose</option>');
-            animateProductFormTabsLoader('start', 'post');
-            getStatesByCountryId($sid,'');
+            if ($cid != 0) {
+                animateProductFormTabsLoader('start', 'post');
+                getStatesByCountryId($cid, '');
+            }
         });
 
         //change cities on state change.
         $('#product-add-state').on('change', function () {
-            var $cid = $(this).val();
+            var $sid = $(this).val();
             $('#product-add-city')
                 .empty()
-                .append('<option selected="selected" value="0">Choose</option>');
-            animateProductFormTabsLoader('start', 'post');
-            getCitiesByStateId($cid,'');
+                .append('<option selected="selected" value="0">Choose city</option>'); 
+            if ($sid != 0) {
+                animateProductFormTabsLoader('start', 'post');
+                getCitiesByStateId($sid, '');
+            }
         });
 
         //get product categories.
@@ -287,45 +359,50 @@
             }
         }
 
-        //get product categories.
-        function getProductSubCategoriesByCategoryId(id,selectedValue) {
-            var lclUrl = serviceGblURL + "category/subcategory/" + id;
-            var clbck = {
-                scs: function (rsp) {
-                    var response = JSON.parse(rsp);
-                    if (response.length > 0) {
-                        for (var i = 0; i < response.length; i++) {
-                            $("#sub-category").append($("<option></option>").val(response[i].id).html(response[i].name));
+        //get product sub-categories.
+        function getProductSubCategoriesByCategoryId(id, selectedValue) {
+                var lclUrl = serviceGblURL + "category/subcategory/" + id;
+                var clbck = {
+                    scs: function (rsp) {
+                        var response = JSON.parse(rsp);
+                        if (response.length > 0) {
+                            for (var i = 0; i < response.length; i++) {
+                                $("#sub-category").append($("<option></option>").val(response[i].id).html(response[i].name));
+                            }
+                            if (selectedValue) {
+                                $('#sub-category').select2('val', selectedValue);
+                            }
                         }
+                        animateProductFormTabsLoader('stop', 'post');
+                    },
+                    flr: function (rsp) {
+                        animateProductFormTabsLoader('stop', 'post');
                     }
-                    animateProductFormTabsLoader('stop', 'post');
-                },
-                flr: function (rsp) {
-                    animateProductFormTabsLoader('stop', 'post');
-                }
-            };
-            RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
+                };
+                RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
         }
 
         //get countries.
         function getCountries(selectedValue) {
-            var lclUrl = serviceGblURL + "address/country";
-            var clbck = {
-                scs: function (rsp) {
-                    var response = JSON.parse(rsp);
-                    if (response.length > 0) {
-                        for (var i = 0; i < response.length; i++) {
-                            $("#product-add-country").append($("<option></option>").val(response[i].id).html(response[i].countryname));
+                var lclUrl = serviceGblURL + "address/country";
+                var clbck = {
+                    scs: function (rsp) {
+                        var response = JSON.parse(rsp);
+                        if (response.length > 0) {
+                            for (var i = 0; i < response.length; i++) {
+                             $("#product-add-country").append($("<option></option>").val(response[i].id).html(response[i].countryname));
+                            }
+                            if (selectedValue) {
+                                $('#product-add-country').select2('val', selectedValue);
+                            }
                         }
+                        animateProductFormTabsLoader('stop', 'post');
+                    },
+                    flr: function (rsp) {
+                        animateProductFormTabsLoader('stop', 'post');
                     }
-                    animateProductFormTabsLoader('stop', 'post');
-                },
-                flr: function (rsp) {
-                    animateProductFormTabsLoader('stop', 'post');
-                }
-            };
-
-            RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
+                };
+                RentoApp.RentoAjax.AjaxHttp(lclUrl, "GET", null, clbck);
         }
 
         //get states by country id.
@@ -337,6 +414,9 @@
                     if (response.length > 0) {
                         for (var i = 0; i < response.length; i++) {
                             $("#product-add-state").append($("<option></option>").val(response[i].id).html(response[i].statename));
+                        }
+                        if (selectedValue) {
+                            $('#product-add-state').select2('val', selectedValue);
                         }
                     }
                     animateProductFormTabsLoader('stop', 'post');
@@ -358,6 +438,9 @@
                     if (response.length > 0) {
                         for (var i = 0; i < response.length; i++) {
                             $("#product-add-city").append($("<option></option>").val(response[i].id).html(response[i].cityname));
+                        }
+                        if (selectedValue) {
+                            $('#product-add-city').select2('val', selectedValue);
                         }
                     }
                     animateProductFormTabsLoader('stop', 'post');
