@@ -1,0 +1,39 @@
+# Turn rewrite engine on
+Options +FollowSymlinks
+RewriteEngine on
+
+#map neat URL to internal URL
+#get request for category
+RewriteRule ^category/list$   utility/UtilityRestController.php?category=allCategory [nc,qsa]
+RewriteRule ^category/subcategory$   utility/UtilityRestController.php?category=allCategoryWithSubCategory [nc,qsa]
+RewriteRule ^category/subcategory/([0-9]+)$   utility/UtilityRestController.php?category=subCategoryByCategoryId&categoryId=$1 [nc,qsa]
+RewriteRule ^category/subcategoryname/([a-z0-9]+)$   utility/UtilityRestController.php?category=subCategoryByName&subCategoryName=$1 [nc,qsa]
+
+#get request for address
+RewriteRule ^address/country$   utility/UtilityRestController.php?address=allCountry [nc,qsa]
+RewriteRule ^address/state/([0-9]+)$   utility/UtilityRestController.php?address=stateByCountryId&countryId=$1 [nc,qsa]
+RewriteRule ^address/city/([0-9]+)$   utility/UtilityRestController.php?address=cityByStateId&stateId=$1 [nc,qsa]
+RewriteRule ^address/cityname/([a-z0-9]+)$   utility/UtilityRestController.php?address=cityByName&cityName=$1 [nc,qsa]
+
+#get request for user
+RewriteRule ^user/email/([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}+)$   user/UserRestController.php?user=getEmail&email=$1 [nc,qsa]
+RewriteRule ^user/remove/([0-9]+)$   user/UserRestController.php?user=deleteUser&userId=$1 [nc,qsa]
+RewriteRule ^user/mobile/([0-9]+)$   user/UserRestController.php?user=getMobileNumber&mobile=$1 [nc,qsa]
+RewriteRule ^user/([0-9]+)$   user/UserRestController.php?user=getUserById&userId=$1 [nc,qsa]
+
+#post request for user
+RewriteRule ^register$   user/UserRestController.php [nc,qsa]
+RewriteRule ^login$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/forgotpassword$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/setpassword$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/resetpassword$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/sendotp$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/verifyotp$   user/UserRestController.php [nc,qsa]
+RewriteRule ^user/update$   user/UserRestController.php [nc,qsa]
+
+RewriteRule ^user/product/([0-9]+)$   user/UserRestController.php?product=getProductByUserId&userId=$1 [nc,qsa]
+
+#post request for product
+RewriteRule ^product/addproduct$   product/ProductRestController.php [nc,qsa]
+RewriteRule ^product/updateproduct$   product/ProductRestController.php [nc,qsa]
+RewriteRule ^product/removeproduct/([0-9]+)/([0-9]+)$   product/ProductRestController.php?product=deleteProduct&ownerId=$1&productId=$2 [nc,qsa]
